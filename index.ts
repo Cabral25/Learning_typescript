@@ -1,3 +1,12 @@
+// Diferenças:
+
+// A diferença central: typescript adiciona tipagem estática ao javascript
+// Também adiciona um sistema de tipos MUITO mais avançado.
+// Typescript verifica erros em tempo de compilação (erros no JS só aparecem em runtime)
+// Typescript precisa ser compilado (todo código typescript vira javascript no final)
+// Tem melhor suporte a projetos grandes
+
+
 // Basics of typescript
 
 
