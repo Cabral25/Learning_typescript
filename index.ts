@@ -25,7 +25,8 @@ const str = 'oi';
 // boolean
 const bool = true;
 
-let arrayNumber: number[] = [1, 2, 3]; // array de number
+let arrayNumber: number[] = [1, 2, 3]; // array de number, também pode ser escrito Array<number>
+let array_: Array<number> = [1, 8, 0, 8]
 let arrayString: string[] = ['oi', 'eu']; // array de string
 let arrayDate: Date[] = [new Date(), new Date()]; // array de objetos Date
 let arrayBool: boolean[] = [true, false]; // array de boolean
@@ -49,11 +50,15 @@ obj.foo();
 obj();
 obj.bar = 100;
 
+
 // unknown
+
 
 let valor: unknown = 10;
 
+
 // void
+
 
 function logar(): void { // função que não retorna nada
     console.log('logged in')
@@ -81,6 +86,10 @@ enum Status {
 
 let id: string | number
 
+function printId(id: number | string = 0) {
+    console.log('Your ID is: ' + id);
+}
+
 
 // Literal types
 
@@ -98,18 +107,38 @@ let user: { nome: string; idade: number}
 
 
 type Usuario = {
-    nome: string
-    idade: number
+    nome: string;
+    idade: number;
+};
+
+function validateUser(usuario: Usuario) {
+    console.log(`Usuário ${usuario.nome} tem ${usuario.idade} anos de idade`);
 }
 
+type ID = number | string;
 
-// Interafaces (muito importante)
+
+// Interfaces (muito importante)
 
 
+// An interface declaration is another way to name an object type
 interface Usuario_ {
-    nome: string
-    idade: number
+    nome: string;
+    idade: number;
 }
+
+function getUser(user: Usuario_) {
+    console.log(`Hello, ${user.nome}, you're ${user.idade}`);
+}
+
+getUser({nome: 'otto', idade: 7})
+
+
+// Type aliases and interfaces are very similar,
+// and in many cases you can choose between them freely.
+// Almost all features of an interface are available in type,
+// the key distinction is that a type cannot be re-opened to
+// add new properties vs an interface which is always extendable.
 
 
 // Generics (nível mais alto)
