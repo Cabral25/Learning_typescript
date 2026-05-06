@@ -55,3 +55,5 @@ type Info = [
 function getInfo(info: Info) {
     console.log()
 }
+
+const z = 'z' as string

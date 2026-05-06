@@ -51,13 +51,17 @@ obj();
 obj.bar = 100;
 
 
+
 // unknown
+
 
 
 let valor: unknown = 10;
 
 
+
 // void
+
 
 
 function logar(): void { // função que não retorna nada
@@ -65,7 +69,9 @@ function logar(): void { // função que não retorna nada
 }
 
 
+
 // never
+
 
 
 function erro(): never {
@@ -73,7 +79,9 @@ function erro(): never {
 }
 
 
+
 // Enums
+
 
 
 enum Status {
@@ -81,7 +89,10 @@ enum Status {
     Inativo
 }
 
+
+
 // Union
+
 
 
 let id: string | number
@@ -91,19 +102,95 @@ function printId(id: number | string = 0) {
 }
 
 
+
 // Literal types
 
 
+
+// Literal types são tipos que permitem valores exatos,
+// não apenas o tipo geral
+
+
+let _status_: string; // isso aceita QUALQUER string, ou seja, pode representar qualquer string
+
+
+// com literal types:
+let estado: "success"; // Apenas aceita "success" como valor, ou seja, só pode representar uma única string
 let status_: 'ativo' | 'inativo'
 
 
-// Objetos tipados
+// Literal types quase sempre aparecem com union types
 
 
-let user: { nome: string; idade: number}
+function printText(s: string, alignment: "left" | "right") {
+    console.log(s, alignment);
+}
+
+printText('hello, world', 'left');
+// Argument of type '"center"' is not assignable to parameter of type '"left" | "right"'
+// printText('olá, mundo', 'center');
+
+
+// numeric literal types work the same way
+
+
+function compare(a: string, b: string): -1 | 0 | 1 {
+    return a === b ? 0 : a > b ? 1 : -1;
+}
+
+
+// Of course, you can combine these with non-literal types
+
+
+interface Options {
+    width: number;
+}
+
+function configure(x: Options | "auto") {
+    console.log(`Width: ${x}`);
+}
+
+configure({width: 100});
+configure("auto");
+// Argument of type '"automatic"' is not assignable to parameter of type 'Options | "auto"'
+// configure("automatic");
+
+
+
+// Object types
+
+
+
+// Apart from primitives, the most common sort of type you’ll
+// encounter is an object type. This refers to any JavaScript
+// value with properties, which is almost all of them!
+
+
+let user: { nome: string; idade: number};
+
+
+function printCoords(pt: { x: number; y: number}){
+    console.log(`The coordinate's x value is ${pt.x}`);
+}
+
+printCoords({ x: 0, y: 7}); // , or ; can be used to separate the properties
+
+
+// Object types can also specify that some or all of their properties are optional.
+// To do this, add a ? after the property name:
+
+
+function printName(obj: { first: string; last?: string}) {
+    // ...
+}
+
+printName({ first: 'Ana'});
+printName({ first: 'Sara', last: 'rizzo'});
+
 
 
 // Type aliases
+
 
 
 type Usuario = {
@@ -118,7 +205,9 @@ function validateUser(usuario: Usuario) {
 type ID = number | string;
 
 
+
 // Interfaces (muito importante)
+
 
 
 // An interface declaration is another way to name an object type
@@ -141,7 +230,9 @@ getUser({nome: 'otto', idade: 7})
 // add new properties vs an interface which is always extendable.
 
 
+
 // Generics (nível mais alto)
+
 
 
 function identidade<T>(valor: T): T {
@@ -149,15 +240,66 @@ function identidade<T>(valor: T): T {
 }
 
 
+
 // null e undefined
+
+
+
+// JavaScript has two primitive values used to signal absent 
+// or uninitialized value: null and undefined.
+// TypeScript has two corresponding types by the same names. 
+// How these types behave depends on whether you have the strictNullChecks option on.
+
 
 
 let x: null = null
 let y: undefined = undefined
 
 
+// strictNullChecks off
 
-// Type annotations os variables
+
+// With strictNullChecks off, values that might be null or undefined
+// can still be accessed normally, and the values null and undefined can
+// be assigned to a property of any type. This is similar to how languages
+// without null checks (e.g. C#, Java) behave. The lack of checking for these
+// values tends to be a major source of bugs; we always recommend people turn 
+// strictNullChecks on if it’s practical to do so in their codebase.
+
+
+// strictNullChecks on
+
+
+// With strictNullChecks on, when a value is null or undefined, 
+// you will need to test for those values before using methods 
+// or properties on that value. Just like checking for undefined 
+// before using an optional property, we can use narrowing to check 
+// for values that might be null:
+
+function doSomething(x: string | null) {
+    if (x === null) {
+        // do nothing
+    } else {
+        console.log(`Hello, ${x.toUpperCase()}`);
+    }
+}
+
+
+// Non-null Assertion Operator (Postfix !)
+
+// TypeScript also has a special syntax for 
+// removing null and undefined from a type without 
+// doing any explicit checking. Writing ! after 
+// any expression is effectively a type assertion 
+// that the value isn’t null or undefined:
+
+function liveDangerously(x?: number | null) {
+    // no error
+    console.log(x!.toFixed());
+}
+
+
+// Type annotations on variables
 
 
 // When you declare a variable using const, var, or let, 
@@ -177,6 +319,7 @@ let myName_ = 'Otto';
 
 
 // Functions
+
 
 
 // Functions are the primary means of passing data around in JavaScript. 
@@ -200,3 +343,26 @@ function getFavoriteNumber(): number {
 // the above example doesn’t change anything. Some codebases will explicitly 
 // specify a return type for documentation purposes, to prevent accidental changes, 
 // or just for personal preference.
+
+
+
+// Type assertions
+
+
+
+// Sometimes you will have information about the type of a value that TypeScript can’t know about.
+// For example, if you’re using document.getElementById, 
+// TypeScript only knows that this will return some kind of 
+// HTMLElement, but you might know that your page will always 
+// have an HTMLCanvasElement with a given ID.
+// In this situation, you can use a type assertion to specify a more specific type:
+
+
+const myCanvas  = document.getElementById('main_canvas') as HTMLCanvasElement;
+
+const _myCanvas = <HTMLCanvasElement> document.getElementById('my_canvas');
+
+
+// TypeScript only allows type assertions which convert to a more specific or
+// less specific version of a type. This rule prevents “impossible” coercions like:
+// const a = 'hello' as number;
