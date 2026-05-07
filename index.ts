@@ -84,6 +84,15 @@ function erro(): never {
 
 
 
+// Enums are a feature added to JavaScript by TypeScript 
+// which allows for describing a value which could be one 
+// of a set of possible named constants. Unlike most 
+// TypeScript features, this is not a type-level addition 
+// to JavaScript but something added to the language and 
+// runtime. Because of this, it’s a feature which you 
+// should know exists, but maybe hold off on using unless you are sure.
+
+
 enum Status {
     Ativo,
     Inativo
@@ -93,6 +102,15 @@ enum Status {
 
 // Union
 
+
+
+// TypeScript’s type system allows you to build 
+// new types out of existing ones using a large 
+// variety of operators.
+// The first way to combine types you might see 
+// is a union type. A union type is a type formed from 
+// two or more other types, representing values that may be 
+// any one of those types. We refer to each of these types as the union’s members.
 
 
 let id: string | number
@@ -298,8 +316,14 @@ function liveDangerously(x?: number | null) {
     console.log(x!.toFixed());
 }
 
+// Just like other type assertions, this doesn’t change 
+// the runtime behavior of your code, so it’s important 
+// to only use ! when you know that the value can’t be null or undefined.
+
+
 
 // Type annotations on variables
+
 
 
 // When you declare a variable using const, var, or let, 
