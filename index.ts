@@ -1,4 +1,4 @@
-// Diferenças:
+// Diferenças entre Javascript e Typescript:
 
 // A diferença central: typescript adiciona tipagem estática ao javascript
 // Também adiciona um sistema de tipos MUITO mais avançado.
@@ -100,7 +100,7 @@ enum Status {
 
 
 
-// Union
+// Union Type
 
 
 
@@ -113,7 +113,7 @@ enum Status {
 // any one of those types. We refer to each of these types as the union’s members.
 
 
-let id: string | number
+let id: string | number;
 
 function printId(id: number | string = 0) {
     console.log('Your ID is: ' + id);
@@ -179,9 +179,31 @@ configure("auto");
 
 
 
+// In JavaScript, the fundamental way that we group and pass 
+// around data is through objects. In TypeScript, we represent 
+// those through object types.
 // Apart from primitives, the most common sort of type you’ll
 // encounter is an object type. This refers to any JavaScript
 // value with properties, which is almost all of them!
+
+
+// Object types can be anonymous:
+function cumprimentar(person: { name: string; age: number}) {
+    return "Hello, " + person.name;
+}
+
+// Or they can be named by using either an interface:
+interface Humano {
+    nome: string; // property nome
+    idade: number; // property idade
+}
+
+// or a type alias:
+type Animal = {
+    nome: string; // property nome
+    raça: string; // property raça
+    sexo?: string;
+}
 
 
 let user: { nome: string; idade: number};
@@ -207,7 +229,7 @@ printName({ first: 'Sara', last: 'rizzo'});
 
 
 
-// Type aliases
+// (Object Type) Type aliases
 
 
 
@@ -224,7 +246,7 @@ type ID = number | string;
 
 
 
-// Interfaces (muito importante)
+// (Object Type) Interfaces (muito importante)
 
 
 
@@ -249,13 +271,97 @@ getUser({nome: 'otto', idade: 7})
 
 
 
-// Generics (nível mais alto)
+// (Object Type) Generics (nível mais alto)
 
 
 
-function identidade<T>(valor: T): T {
-    return valor;
+// Imagine a Box type that can contain any value - strings, 
+// numbers, whatever
+
+interface Box {
+    contents: any;
 }
+
+// Right now, the contents property is typed as any, 
+// which works, but can lead to accidents down the line.
+// We can make a generic Box type which declares a type parameter:
+
+interface Box_<Type> {
+    contents: Type;
+}
+
+interface Fruit {
+    //..
+}
+
+// You might read this as “A Box of Type is something 
+// whose contents have type Type”. Later on, when we 
+// refer to Box, we have to give a type argument in place of Type.
+
+let box_string: Box_<string> = {contents: 'a'};
+let box_number: Box_<number> = {contents: 999};
+let box_boolean: Box_<boolean> = {contents: true};
+let box_array: Box_<number[]> = {contents: [1, 2, 3]};
+let box_fruits: Box_<Fruit>;
+
+// Think of Box as a template for a real type, where Type 
+// is a placeholder that will get replaced with some other 
+// type. When TypeScript sees Box<string>, it will replace 
+// every instance of Type in Box<Type> with string, 
+// and end up working with something like { contents: string }. 
+// In other words, Box<string> and our earlier StringBox work identically.
+
+
+// Type aliases can also be generic:
+
+type Bag<Type> = {
+    contents: Type;
+}
+
+function updateContent<Type>(box: Box_<Type>, new_contents: Type) {
+    return box.contents = new_contents;
+}
+
+
+
+// Tuple types
+
+
+
+// A tuple type is another sort of Array type that knows exactly
+// how many elements it contains, and exactly which types it contains at specific positions.
+
+
+type StringNumberPair = [string, number, number?];
+
+// Here, StringNumberPair is a tuple type of string, number and number
+// To the type system, StringNumberPair describes arrays whose 0 index
+// contains a string and whose 1 index contains a number.
+
+function _doSomething(pair: [string, number]) {
+    const [inputString, hash] = pair;
+    const a = pair[0];
+    const b = pair[1];
+    return pair.length;
+}
+
+console.log(_doSomething(['a', 2]));
+
+// Tuples can also have rest elements, which have to be an array/tuple type.
+type StringNumberBooleans = [string, number, ...boolean[]]; // two first elements are string and number, but may have any number of booleans following
+type StringBooleanNumbers = [...boolean[], string, number];
+
+// A tuple with a rest element has no set “length” - it 
+// only has a set of well-known elements in different positions.
+
+type Coords = [number, number];
+
+function setCoordinate(coords: Coords) {
+    const [x, y] = coords;
+    return
+}
+
+
 
 
 
