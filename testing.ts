@@ -57,3 +57,29 @@ function getInfo(info: Info) {
 }
 
 const z = 'z' as string
+
+
+let users = {user1: {'nome': 'otto', 'idade': 25}, user2: {nome: 'sara', idade: 23}};
+
+let newUsers = {
+    user1: {nome: 'otto', idade: 55, pertences: ['celular', 'boné', 'caneta']},
+    user2: {nome: 'sara', idade: 22, pertences: ['chiclete', 'brincos', 'lixa']}
+}
+
+console.log(users.user1.nome);
+for (let pertences of newUsers.user2.pertences) {
+    console.log(pertences); // chiclete brincos lixa
+}
+
+console.log(newUsers.user1.pertences); // [ 'celular', 'boné', 'caneta' ]
+
+
+let pedidos_ = [
+    {id: 0, produto: 'tv', valor: 999, pago: true},
+    {id: 1, produto: 'computer', valor: 9999, pago: false},
+    {id: 2, produto: 'wardrobe', valor: 299, pago: false}
+]
+
+for (let i = 0; i < pedidos_.length; i++) {
+    console.log(pedidos_[i].pago);
+}

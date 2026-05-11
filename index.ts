@@ -32,6 +32,27 @@ let arrayDate: Date[] = [new Date(), new Date()]; // array de objetos Date
 let arrayBool: boolean[] = [true, false]; // array de boolean
 
 
+
+// Type annotations on variables
+
+
+
+// When you declare a variable using const, var, or let, 
+// you can optionally add a type annotation to explicitly specify the type of the variable:
+
+
+let myName: string = 'Otoo';
+
+
+// In most cases, though, this isn’t needed. Wherever possible, 
+// TypeScript tries to automatically infer the types in your code. 
+// For example, the type of a variable is inferred based on the type of its initializer:
+
+
+let myName_ = 'Otto';
+
+
+
 // Outros tipos básicos
 
 
@@ -358,10 +379,8 @@ type Coords = [number, number];
 
 function setCoordinate(coords: Coords) {
     const [x, y] = coords;
-    return
+    return {x, y}
 }
-
-
 
 
 
@@ -425,26 +444,6 @@ function liveDangerously(x?: number | null) {
 // Just like other type assertions, this doesn’t change 
 // the runtime behavior of your code, so it’s important 
 // to only use ! when you know that the value can’t be null or undefined.
-
-
-
-// Type annotations on variables
-
-
-
-// When you declare a variable using const, var, or let, 
-// you can optionally add a type annotation to explicitly specify the type of the variable:
-
-
-let myName: string = 'Otoo';
-
-
-// In most cases, though, this isn’t needed. Wherever possible, 
-// TypeScript tries to automatically infer the types in your code. 
-// For example, the type of a variable is inferred based on the type of its initializer:
-
-
-let myName_ = 'Otto';
 
 
 
