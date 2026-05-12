@@ -83,3 +83,18 @@ let pedidos_ = [
 for (let i = 0; i < pedidos_.length; i++) {
     console.log(pedidos_[i].pago);
 }
+
+const objeto = {
+    nome: 'any', 
+    idade: 9
+}
+
+// iterando sobre as chaves
+for (let chave in objeto) {
+    console.log(chave); // nome idade
+}
+
+// iterando sobre os valores
+for (let chave of Object.values(objeto)) {
+    console.log(chave); // any 9
+}

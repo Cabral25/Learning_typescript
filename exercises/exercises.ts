@@ -75,6 +75,13 @@ interface _Produto {
 }
 
 
+let arrayProdutos: _Produto[] = [
+    {nome: 'ladle', preco: 7, estoque: 56},
+    {nome: 'colander', preco: 9, estoque: 70},
+    {nome: 'blender', preco: 77, estoque: 90}
+]
+
+
 interface _Usuario {
     nome: string;
     ativo: boolean;
@@ -121,6 +128,7 @@ async function buscarUsuario(usuario: _Usuario) {
     return user;
 }
 
+
 type _Status = {
     status: 'ativo' | 'inativo' | 'pendente';
 }
@@ -150,4 +158,14 @@ function returnPaidOrders(orders: Pedido[]) {
 }
 
 let result = returnPaidOrders(pedidos);
-console.log(result);
+console.log(result); // [ { id: 0, produto: 'tv', valor: 999, pago: true } ]
+
+
+type Tupla = [number, string, boolean];
+
+
+function criarResposta<Type>(dados: Type) {
+    return {sucesso: true, dados};
+}
+
+console.log(criarResposta({nome: 'otto', idade: 25})); // { sucesso: true, dados: { nome: 'otto', idade: 25 } }
