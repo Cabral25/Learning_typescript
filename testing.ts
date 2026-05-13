@@ -98,3 +98,29 @@ for (let chave in objeto) {
 for (let chave of Object.values(objeto)) {
     console.log(chave); // any 9
 }
+
+
+let arrayObjects = [
+    {id: 0, nome: 'hvhv', email: 'jhjh', ativo: true},
+    {id: 1, nome: 'hjghff', email: 'awae', ativo: true},
+    {id: 2, nome: 'nbmn,', email: '@gmail.com', ativo: true}
+]
+
+
+console.log(arrayObjects);
+
+function removeUser(id: number) {
+    const index = arrayObjects.findIndex(user => user.id === id);
+    if (index === -1) {
+        return 'User not found';
+    }
+
+    arrayObjects.splice(index, 1);
+    return 'User deleted successfully!';
+}
+
+
+let res = removeUser(0);
+
+console.log(res);
+console.log(arrayObjects);
