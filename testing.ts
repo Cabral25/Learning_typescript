@@ -124,3 +124,31 @@ let res = removeUser(0);
 
 console.log(res);
 console.log(arrayObjects);
+
+// filter
+let arrayNumbers = [9, 6, 3, 2, 4, 8];
+
+let evenNumbers = arrayNumbers.filter(num => num % 2 == 0);
+console.log(evenNumbers); // [ 6, 2, 4, 8 ]
+
+function returnOddNumbers(n: number) {
+    return n % 2 !== 0;
+}
+
+let oddNumbers = arrayNumbers.filter(returnOddNumbers);
+console.log(oddNumbers); // [ 9, 3 ]
+
+
+// reduce
+let lista = [9, 0, 7, 5, 3];
+
+let resultReduce = lista.reduce((previous, current) => previous + current);
+console.log(resultReduce); // 24
+
+function somaArray(acumulador: number, elemento: number): number {
+    return acumulador + elemento;
+}
+
+let resReduce = lista.reduce(somaArray);
+console.log(resReduce); // 24
+
